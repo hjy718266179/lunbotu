@@ -14,7 +14,8 @@
 			}
 			header{
 				width: 100%;
-				height: 100%;				
+				height: 100%;
+				position: relative;				
 			}
 			ul{
 				width: 93.75rem;
@@ -28,6 +29,25 @@
 				width: 16rem;
 				height: 5.125rem;
 				
+			}
+			
+			/*小圆点*/
+			.dian{
+				width: 4.25rem;
+				height: 0.575rem;
+				position: absolute;
+				top: 4.5rem;
+				right: 0.0625rem;
+			}
+			.dian>li{
+				width: 0.4625rem;
+				height: 0.4625rem;
+				background: #FFFFFF;
+				margin-left: 0.45rem;
+				border-radius:3.125rem ;
+			}
+			.dian>.yanse{
+				background: orange;
 			}
 		</style>
 	</head>
@@ -45,15 +65,28 @@
 				<li><img src="img/COS-03.jpg" alt="" /></li>
 				<li><img src="img/COS-04.jpg" alt="" /></li>
 			</ul>
+			<div>
+				<ul class="dian">
+					<li class="yanse"></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>			
 		</header>
 	</body>
 	<script type="text/javascript">
 		var uls = document.querySelector("ul");
 		var header = document.querySelector("header");
+		var lis = document.querySelectorAll("div ul li");//小圆点
+		var n = 0;//图片索引值
 		var X = 0;//获取坐标
 		var ulsL = 0;//获取左边距离
 		var W = header.clientWidth;//获取宽度
-		
+		/*阻止默认行为代码*/
+		uls.addEventListener('touchstart',function(e){
+			e.preventDefault();
+		});
 		
 		/*动态生成两份图片*/
 		uls.innerHTML+=uls.innerHTML;
@@ -61,36 +94,35 @@
 		lt = uls.children;
 //		console.log(lt)
 		uls.style.width = lt.length*W+'px';
-		uls.addEventListener('touchstart',function(e){
-			e.preventDefault();
-		});
+		
+		
 		
 		
 		uls.addEventListener('touchstart',function(e){
 			X=e.changedTouches[0].pageX;//获取点击坐标
-//			console.log(X)
-			
+//			console.log(X)			
 			uls.style.transition = 'none';
 			
 			var XXL=this.offsetLeft;
 			var YY=Math.round(XXL/W);
 			if(YY==0){
 				uls.style.left = -4*W+'px'
-			}
+			};
 			if(-YY==lt.length-1){
 				uls.style.left = -3*W+'px'
-			}
+			};
 			
 			ulsL = this.offsetLeft;//
-//			console.log(ulsL)
-			
-		})
+//			console.log(ulsL)			
+		});
+		
 		uls.addEventListener('touchmove',function(e){
 			var XX=e.changedTouches[0].pageX;//获取每一下移动的坐标
 //			console.log(XX)
 			uls.style.left=(XX-X)+ulsL+'px';//
 //			console.log(uls.style.left=(X-XX)+ulsL+'px')
-		})
+		});
+		
 		uls.addEventListener('touchend',function(e){
 			var XXL=this.offsetLeft;//
 //			console.log(XXL)
@@ -98,6 +130,12 @@
 //			console.log(Y)
 			uls.style.left = Y*W+'px';//坐标大于或小于50%弹回原图
 			uls.style.transition = '1s';//延迟
+			
+			lis[n].className = '';
+//			console.log(lis[n])
+			lis[-Y%lis.length].className = 'yanse';
+			n = -Y%lis.length;//给n重新赋值
+			
 		})
 	</script>
 </html>
