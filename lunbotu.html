@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			*{list-style: none;}
+			html,body{
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			header{
+				width: 100%;
+				height: 100%;				
+			}
+			ul{
+				width: 93.75rem;
+				height: 7.5rem;
+				position: absolute;
+			}
+			ul li{
+				float: left;
+			}
+			ul li img{
+				width: 16rem;
+				height: 5.125rem;
+				
+			}
+		</style>
+	</head>
+	<script type="text/javascript">
+		var html = document.documentElement;
+		var htmlw = html.getBoundingClientRect().width;
+		html.style.fontSize=htmlw/16+'px';
+	</script>
+	
+	<body>	
+		<header>
+			<ul>
+				<li><img src="img/COS-01.jpg" alt="" /></li>
+				<li><img src="img/COS-02.jpg" alt="" /></li>
+				<li><img src="img/COS-03.jpg" alt="" /></li>
+				<li><img src="img/COS-04.jpg" alt="" /></li>
+			</ul>
+		</header>
+	</body>
+	<script type="text/javascript">
+		var uls = document.querySelector("ul");
+		var header = document.querySelector("header");
+		var X = 0;//获取坐标
+		var ulsL = 0;//获取左边距离
+		var W = header.clientWidth;//获取宽度
+		
+//		uls.addEventListener('touchstart',function(e){
+//			e.preventDefault();
+//		});
+		uls.addEventListener('touchstart',function(e){
+			X=e.changedTouches[0].pageX;//获取点击坐标
+//			console.log(X)
+			ulsL = this.offsetLeft;//
+//			console.log(ulsL)
+			uls.style.transition = 'none';
+		})
+		uls.addEventListener('touchmove',function(e){
+			var XX=e.changedTouches[0].pageX;//获取每一下移动的坐标
+//			console.log(XX)
+			uls.style.left=(XX-X)+ulsL+'px';//
+//			console.log(uls.style.left=(X-XX)+ulsL+'px')
+		})
+		uls.addEventListener('touchend',function(e){
+			var XXL=this.offsetLeft;//
+//			console.log(XXL)
+			var Y=Math.round(XXL/W);//取整
+//			console.log(Y)
+			uls.style.left = Y*W+'px';//坐标大于或小于50%弹回原图
+			uls.style.transition = '1s';//延迟
+		})
+	</script>
+</html>
