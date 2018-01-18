@@ -69,8 +69,7 @@
 		uls.addEventListener('touchstart',function(e){
 			X=e.changedTouches[0].pageX;//获取点击坐标
 //			console.log(X)
-			ulsL = this.offsetLeft;//
-//			console.log(ulsL)
+			
 			uls.style.transition = 'none';
 			
 			var XXL=this.offsetLeft;
@@ -81,6 +80,9 @@
 			if(-YY==lt.length-1){
 				uls.style.left = -3*W+'px'
 			}
+			
+			ulsL = this.offsetLeft;//
+//			console.log(ulsL)
 			
 		})
 		uls.addEventListener('touchmove',function(e){
